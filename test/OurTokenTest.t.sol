@@ -17,11 +17,7 @@ contract OurTokenTest is Test {
     uint256 public constant STARTING_BALANCE = 100 ether;
 
     event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 
     function setUp() public {
         deployer = new DeployOurToken();
@@ -315,10 +311,7 @@ contract OurTokenTest is Test {
         assertEq(ourToken.balanceOf(bob), STARTING_BALANCE - amount);
     }
 
-    function testFuzzApproveAndTransferFrom(
-        uint256 allowance,
-        uint256 transferAmount
-    ) public {
+    function testFuzzApproveAndTransferFrom(uint256 allowance, uint256 transferAmount) public {
         allowance = bound(allowance, 1, STARTING_BALANCE);
         transferAmount = bound(transferAmount, 1, allowance);
 
@@ -333,10 +326,7 @@ contract OurTokenTest is Test {
 
         // Allowance should decrease by transferAmount (unless it was max)
         if (allowance != type(uint256).max) {
-            assertEq(
-                ourToken.allowance(bob, alice),
-                allowance - transferAmount
-            );
+            assertEq(ourToken.allowance(bob, alice), allowance - transferAmount);
         }
     }
 
